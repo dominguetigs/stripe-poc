@@ -1,9 +1,11 @@
 import { FastifyInstance } from 'fastify'
 
+import { env } from '../env'
+
 export function listen(app: FastifyInstance) {
   app
     .listen({
-      port: 3333,
+      port: env.PORT,
     })
     .then(() => {
       console.log(`HTTP Server Running!`)
