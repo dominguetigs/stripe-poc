@@ -11,5 +11,11 @@ declare module 'knex/types/tables' {
       created_at: string
       token: string
     }
+
+    user_email_by_stripe_customer_id: {
+      id: string
+      user_email: string
+      stripe_customer_id: string
+    }
   }
 }
