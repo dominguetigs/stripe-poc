@@ -5,6 +5,7 @@ import { randomUUID } from 'node:crypto'
 import { knex } from '../database'
 import { auth } from '../helpers/authentication'
 import { stripe } from '../stripe'
+import { z } from 'zod'
 
 const routes = async (app: FastifyInstance) => {
   app.get('/customer-by-email', auth(app), async (request, reply) => {
@@ -42,6 +43,30 @@ const routes = async (app: FastifyInstance) => {
       return reply.status(200).send({ stripe_customer_id: id })
     } catch (error) {
       return reply.status(500).send()
+    }
+  })
+
+  app.get('/products', auth(app), async (_, reply) => {
+    try {
+      const products = await stripe.products.list()
+      return reply.status(200).send(products)
+    } catch (error) {
+      return reply.status(400).send()
+    }
+  })
+
+  app.get('/products/:id', auth(app), async (request, reply) => {
+    const paramsSchema = z.object({
+      id: z.string().nonempty(),
+    })
+
+    const { id } = paramsSchema.parse(request.params)
+
+    try {
+      const product = await stripe.products.retrieve(id)
+      return reply.status(200).send(product)
+    } catch (error) {
+      return reply.status(400).send()
     }
   })
 }
