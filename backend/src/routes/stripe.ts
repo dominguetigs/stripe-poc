@@ -19,7 +19,7 @@ const routes = async (app: FastifyInstance) => {
         .first()
 
       if (!userEmailByStripeCustomerId) {
-        return reply.status(404).send('User not found')
+        return reply.status(200).send({})
       }
 
       return reply.status(200).send(userEmailByStripeCustomerId)

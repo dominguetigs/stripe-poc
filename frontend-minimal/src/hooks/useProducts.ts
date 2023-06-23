@@ -1,39 +1,42 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-import { api } from '@/services/api'
+import { api } from '@/services/api';
 
 interface UseProductsReturn {
-  product: any
-  products: any[]
-  retrieveProduct: (productId: string) => Promise<void>
-  retrieveProducts: () => Promise<void>
+  product: any;
+  products: any[];
+  retrieveProduct: (productId: string) => Promise<void>;
+  retrieveProducts: () => Promise<void>;
 }
 
 export const useProducts = (): UseProductsReturn => {
-  const [product, setProduct] = useState()
+  const [product, setProduct] = useState();
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
-  async function retrieveProduct(productId: string): Promise<void> {
+  async function retrieveProduct(productId: string): Promise<any> {
     try {
-      const response = await api.get(`/stripe/products/${productId}`)
-      console.log(response)
+      const response = await api.get(`/stripe/products/${productId}`);
+      const responseData = response.data;
+      setProduct(responseData);
+      return responseData;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
-  async function retrieveProducts(): Promise<void> {
+  async function retrieveProducts(): Promise<any> {
     try {
-      const response = await api.get('/stripe/products')
-      const responseData = response.data?.data
-      setProducts(responseData)
+      const response = await api.get('/stripe/products');
+      const responseData = response.data?.data;
+      setProducts(responseData);
+      return responseData;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
-  return { product, products, retrieveProduct, retrieveProducts }
-}
+  return { product, products, retrieveProduct, retrieveProducts };
+};

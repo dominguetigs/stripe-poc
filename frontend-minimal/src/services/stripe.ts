@@ -3,6 +3,8 @@ import packageInfo from '../../package.json';
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY ?? '';
 
+console.log(stripeSecretKey, 43243);
+
 export const stripe = new Stripe(stripeSecretKey, {
   apiVersion: '2022-11-15',
   appInfo: {
