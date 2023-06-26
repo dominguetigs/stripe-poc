@@ -8,13 +8,15 @@ interface UseCheckoutReturn {
 export const useCheckout = (): UseCheckoutReturn => {
   async function createSession(priceId: string): Promise<void> {
     try {
-      const response = await apiNext.post('/stripe/checkoutSession', { priceId });
+      const response = await apiNext.post('/stripe/checkout-session', { priceId });
       const { sessionId } = response.data;
 
       const stripeJs = await getStripeJs();
 
       await stripeJs?.redirectToCheckout({ sessionId });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return { createSession };
