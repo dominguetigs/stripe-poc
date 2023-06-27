@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   try {
     const stripeCheckoutSession = await stripe.checkout.sessions.create({
       customer: stripe_customer_id,
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'boleto'],
       billing_address_collection: 'required',
       line_items: [
         {
@@ -38,8 +38,6 @@ export async function POST(request: Request) {
     });
     return NextResponse.json({ sessionId: stripeCheckoutSession.id }, { status: 200 });
   } catch (err) {
-    console.log('ERROOOOOOO');
-    console.log(err, null, 2);
     const error = err as any;
     return NextResponse.json({ error: error?.message }, { status: 500 });
   }
