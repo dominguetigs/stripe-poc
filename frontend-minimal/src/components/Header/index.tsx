@@ -1,9 +1,15 @@
 'use client';
 
+import { useAuthContext } from '@/auth/useAuthContext';
+
 import styles from './styles.module.css';
 
 export const Header = () => {
-  function handleLogout() {}
+  const { logout } = useAuthContext();
+
+  function handleLogout() {
+    logout();
+  }
 
   return (
     <header className={styles.header}>

@@ -18,7 +18,8 @@ export const Login = () => {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    login(email, password);
+
+    await login(email, password);
   }
 
   return (

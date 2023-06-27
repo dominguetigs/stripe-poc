@@ -27,8 +27,6 @@ export class Service {
   handleError = (error: AxiosError): void => {
     // const data = error?.response?.data as any;
 
-    debugger;
-
     if (error?.response?.status === 401) {
       window.location.replace('/login');
       setSession(null, null);
