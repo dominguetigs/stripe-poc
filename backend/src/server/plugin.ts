@@ -1,18 +1,21 @@
 import { FastifyInstance } from 'fastify'
 
+import path from 'path'
+
+import autoLoad from '@fastify/autoload'
+import fastifyJwt from '@fastify/jwt'
 import { fastifyCors } from '@fastify/cors'
 
-import fastifyJwt from '@fastify/jwt'
-import autoLoad from '@fastify/autoload'
-
-import path from 'path'
+import { env } from '../env'
 
 export function setupPlugins(app: FastifyInstance) {
   app.register(fastifyCors, {
     origin: true,
   })
 
-  app.register(fastifyJwt, { secret: '123456789876543210' })
+  app.register(fastifyJwt, {
+    secret: env.JWT_SECRET
+  })
 
   app.register(autoLoad, {
     dir: path.join(__dirname, '../plugins'),
