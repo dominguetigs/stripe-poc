@@ -1,0 +1,16 @@
+.header {
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  box-shadow: 1px 2px 18px 6px #0000002e;
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  width: calc(100% - 32px);
+}
+
+.menu {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
