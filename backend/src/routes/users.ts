@@ -86,7 +86,7 @@ const routes = async (app: FastifyInstance) => {
       })
       .returning(['id', 'name', 'email', 'created_at', 'token'])
 
-    return updatedUser
+    return updatedUser[0]
   })
 }
 

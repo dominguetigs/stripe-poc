@@ -1,5 +1,9 @@
 import { Inter } from 'next/font/google';
 
+import { AuthProvider } from '@/auth/AuthContext';
+import { AuthGuard } from '@/auth/AuthGuard';
+import { Suspense } from 'react';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -11,7 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body className={inter.className} style={{ margin: 0, padding: 0, boxSizing: 'border-box' }}>
-        {children}
+        <Suspense>
+          <AuthProvider>
+            <AuthGuard>{children}</AuthGuard>
+          </AuthProvider>
+        </Suspense>
       </body>
     </html>
   );

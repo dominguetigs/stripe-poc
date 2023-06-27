@@ -1,8 +1,7 @@
 'use client';
 
+import { Api } from '@/services/api';
 import { useState } from 'react';
-
-import { api } from '@/services/api';
 
 interface UseProductsReturn {
   product: any;
@@ -16,9 +15,11 @@ export const useProducts = (): UseProductsReturn => {
 
   const [products, setProducts] = useState([]);
 
+  const api = new Api();
+
   async function retrieveProduct(productId: string): Promise<any> {
     try {
-      const response = await api.get(`/stripe/products/${productId}`);
+      const response = await api.product.retrive(productId);
       const responseData = response.data;
       setProduct(responseData);
       return responseData;
@@ -29,7 +30,7 @@ export const useProducts = (): UseProductsReturn => {
 
   async function retrieveProducts(): Promise<any> {
     try {
-      const response = await api.get('/stripe/products');
+      const response = await api.product.list();
       const responseData = response.data?.data;
       setProducts(responseData);
       return responseData;

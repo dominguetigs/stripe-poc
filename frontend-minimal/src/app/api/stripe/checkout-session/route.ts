@@ -1,19 +1,21 @@
 import { NextResponse } from 'next/server';
 
-import { api } from '@/services/api';
+import { Api } from '@/services/api';
 import { stripe } from '@/services/stripe';
+
+const api = new Api();
 
 export async function POST(request: Request) {
   const { priceId } = await request.json();
 
   console.log(priceId, 'price ID');
 
-  const response = await api.get('/stripe/customer-by-email');
+  const response = await api.stripe.customer.retriveByEmail();
 
   let responseData = response.data;
 
   if (!responseData?.stripe_customer_id) {
-    const response = await api.post('/stripe/customer');
+    const response = await api.stripe.customer.create();
     responseData = response.data;
   }
 

@@ -6,7 +6,7 @@ import { useCheckout } from '@/hooks/useCheckout';
 
 import { useProducts } from '@/hooks/useProducts';
 
-import styles from './style.module.css';
+import styles from './styles.module.css';
 
 export const ProductList = (): JSX.Element => {
   const { createSession } = useCheckout();
