@@ -1,27 +1,24 @@
 import { NextResponse } from 'next/server';
 
-import { Api } from '@/services/api';
+// import { Api } from '@/services/api';
 import { stripe } from '@/services/stripe';
-
-const api = new Api();
+import { api } from '@/services/api';
 
 export async function POST(request: Request) {
   const { priceId } = await request.json();
 
-  console.log(priceId, 'price ID');
+  // const api = new Api();
 
-  const response = await api.stripe.customer.retriveByEmail();
+  const response = await api.get('/stripe/customer-by-email');
 
-  let responseData = response.data;
+  let responseData = response?.data;
 
   if (!responseData?.stripe_customer_id) {
-    const response = await api.stripe.customer.create();
+    const response = await api.post('/stripe/customer');
     responseData = response.data;
   }
 
   const { stripe_customer_id } = responseData;
-
-  console.log(stripe_customer_id, 'STRIPE CUSTOMER ID');
 
   try {
     const stripeCheckoutSession = await stripe.checkout.sessions.create({

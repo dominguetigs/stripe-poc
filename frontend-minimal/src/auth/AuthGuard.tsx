@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import { Login } from '@/components/Login';
-
 import { useAuthContext } from './useAuthContext';
 
 type AuthGuardProps = {
@@ -15,7 +13,7 @@ type AuthGuardProps = {
 export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { isAuthenticated, isInitialized } = useAuthContext();
 
-  /* const { push } = useRouter();
+  const { push, replace } = useRouter();
 
   const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
 
@@ -29,19 +27,19 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
     if (isAuthenticated) {
       setRequestedLocation(null);
     }
-  }, [isAuthenticated, pathname, push, requestedLocation]); */
+  }, [isAuthenticated, pathname, push, requestedLocation]);
 
   if (!isInitialized) {
     return 'Loading...';
   }
 
-  /* if (!isAuthenticated) {
+  if (!isAuthenticated) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
 
-    return <Login />;
-  } */
+    replace('/login');
+  }
 
   return <>{children}</>;
 };

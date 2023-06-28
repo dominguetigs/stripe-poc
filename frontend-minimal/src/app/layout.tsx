@@ -15,11 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body className={inter.className} style={{ margin: 0, padding: 0, boxSizing: 'border-box' }}>
-        <Suspense>
-          <AuthProvider>
-            <AuthGuard>{children}</AuthGuard>
-          </AuthProvider>
-        </Suspense>
+        {children}
       </body>
     </html>
   );

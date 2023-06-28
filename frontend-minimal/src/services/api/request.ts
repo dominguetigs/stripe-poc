@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios, { AxiosError, AxiosInstance, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
-import { setSession } from '@/auth/utils';
+// import { setSession } from '@/auth/utils';
 
 type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -28,8 +28,8 @@ export class Service {
     // const data = error?.response?.data as any;
 
     if (error?.response?.status === 401) {
-      window.location.replace('/login');
-      setSession(null, null);
+      // window.location.replace('/login');
+      // setSession(null, null);
       return;
     }
 
@@ -43,6 +43,8 @@ export class Service {
     headers: RawAxiosRequestHeaders = {}
   ): Promise<any> => {
     const path = `${this.baseUrl}/${endpoint}`;
+
+    console.log(path);
 
     if (method === 'GET') {
       return this.service.get(path);

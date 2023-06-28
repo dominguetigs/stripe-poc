@@ -1,14 +1,19 @@
 'use client';
 
-import { useAuthContext } from '@/auth/useAuthContext';
+import { useRouter } from 'next/navigation';
+
+// import { useAuthContext } from '@/auth/useAuthContext';
 
 import styles from './styles.module.css';
 
 export const Header = () => {
-  const { logout } = useAuthContext();
+  // const { logout } = useAuthContext();
+
+  const { replace } = useRouter();
 
   function handleLogout() {
-    logout();
+    // logout();
+    replace('/login');
   }
 
   return (
@@ -16,7 +21,10 @@ export const Header = () => {
       <span>Produtos</span>
       <div className={styles.menu}>
         <button onClick={() => handleLogout()}>Meu pedidos</button>
+        {/**
+         * 
         <button onClick={() => handleLogout()}>Sair</button>
+         */}
       </div>
     </header>
   );

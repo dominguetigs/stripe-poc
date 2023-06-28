@@ -17,6 +17,7 @@ export class StripeCustomerService extends StripeBaseService {
 
   retriveByEmail = async (): Promise<AxiosResponse<any, any>> => {
     const url = `${this.endpoint}/customer-by-email`;
+    console.log(url, 777);
     return Service.get(url) as Promise<AxiosResponse<any, any>>;
   };
 }
