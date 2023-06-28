@@ -12,9 +12,7 @@ const routes = async (app: FastifyInstance) => {
     const userEmail = request?.user_data?.email
 
     try {
-      const userEmailByStripeCustomerId = await knex(
-        'user_email_by_stripe_customer_id'
-      )
+      const userEmailByStripeCustomerId = await knex('user_email_by_stripe_customer_id')
         .where('user_email', userEmail)
         .first()
 
@@ -67,6 +65,35 @@ const routes = async (app: FastifyInstance) => {
       return reply.status(200).send(product)
     } catch (error) {
       return reply.status(400).send()
+    }
+  })
+
+  app.post('/cancel-purchase', auth(app), async (request, reply) => {
+    const bodySchema = z.object({
+      paymentIntentId: z.string().nonempty(),
+    })
+
+    const { paymentIntentId } = bodySchema.parse(request.body)
+
+    try {
+      const payment = await stripe.paymentIntents.cancel(paymentIntentId)
+
+      if (payment.status === 'canceled') {
+        const refund = await stripe.refunds.create({
+          payment_intent: payment.id,
+        })
+
+        if (refund.status === 'succeeded') {
+          reply.send({ sucesso: true })
+        } else {
+          reply.send({ erro: 'Falha no reembolso' })
+        }
+      } else {
+        reply.send({ erro: 'Falha no cancelamento' })
+      }
+    } catch (error) {
+      console.error(error)
+      reply.status(500).send({ erro: 'Ocorreu um erro ao cancelar a compra.' })
     }
   })
 }

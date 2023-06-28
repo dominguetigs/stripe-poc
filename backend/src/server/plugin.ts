@@ -6,6 +6,8 @@ import autoLoad from '@fastify/autoload'
 import fastifyJwt from '@fastify/jwt'
 import { fastifyCors } from '@fastify/cors'
 
+import { fastifyRawBody } from 'fastify-raw-body'
+
 import { env } from '../env'
 
 export function setupPlugins(app: FastifyInstance) {
@@ -15,6 +17,14 @@ export function setupPlugins(app: FastifyInstance) {
 
   app.register(fastifyJwt, {
     secret: env.JWT_SECRET
+  })
+
+  app.register(fastifyRawBody, {
+    field: 'rawBody',
+    global: false,
+    encoding: 'utf8',
+    runFirst: true,
+    routes: []
   })
 
   app.register(autoLoad, {
