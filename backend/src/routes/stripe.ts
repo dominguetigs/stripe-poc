@@ -86,14 +86,14 @@ const routes = async (app: FastifyInstance) => {
         if (refund.status === 'succeeded') {
           reply.send({ sucesso: true })
         } else {
-          reply.send({ erro: 'Falha no reembolso' })
+          reply.send({ erro: 'Refund failure' })
         }
       } else {
-        reply.send({ erro: 'Falha no cancelamento' })
+        reply.send({ erro: 'Cancel failure' })
       }
     } catch (error) {
       console.error(error)
-      reply.status(500).send({ erro: 'Ocorreu um erro ao cancelar a compra.' })
+      reply.status(500).send({ erro: 'Failure' })
     }
   })
 }
