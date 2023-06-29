@@ -20,8 +20,8 @@ export const Header = () => {
     <header className={styles.header}>
       <span>Produtos</span>
       <div className={styles.menu}>
-        <button onClick={() => handleLogout()}>Meu pedidos</button>
         {/**
+        <button onClick={() => handleLogout()}>Meu pedidos</button>
          * 
         <button onClick={() => handleLogout()}>Sair</button>
          */}
